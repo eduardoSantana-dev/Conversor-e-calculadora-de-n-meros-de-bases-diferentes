@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor e calculadora de bases diferentes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/5fcf1c6510.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="links">
+            <span>Conversão</span>
+            <span>Calculadora</span>
+        </div>
+        <div class="tema">
+            <button class="buttonTema" onclick="mudarTema('escuro')">
+                <i class="fa-regular fa-moon"></i>
+            </button>
+            <button class="buttonTema" onclick="mudarTema('claro')">
+                <i class="fa-regular fa-sun"></i>
+            </button>
+        </div>
+    </div>
+    <div class="container conversao">
+        <p class="titulo">Conversão de bases</p>
+        <div class="box-conversao " id="div_conversao">
+            <div class="input-box">
+                <label for="numeroConversao">Número:</label>
+                <input type="text" id="numeroConversao" placeholder="Insira o Número">
+            </div>
+            <div class="input-box">
+                <label for="numeroConversao">Base:</label>
+                <Select id="base_select">
+                    <option value="10">Decimal (Base 10)</option>
+                    <option value="2">Binário (Base 2)</option>
+                    <option value="8">Octal (Base 8)</option>
+                    <option value="16">Hexadecimal (Base 16)</option>
+                </Select>
+            </div>
+            <button onclick="Converter()">Converter</button>
+            <div id="resultado">
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    
+    function Converter() {
+        let numero = numeroConversao.value
+        let base = base_select.value
+        let decimal = parseInt(numero, base)
+        let binario = decimal.toString(2)
+        let octal = decimal.toString(8)
+        let hex = decimal.toString(16)
+        if(Number.isNaN(decimal) || Number.isNaN(binario)|| Number.isNaN(octal)|| Number.isNaN(hex)){
+            alert("Numero inválido para essa base")
+            resultado.innerHTML = ''
+             div_conversao.classList.remove("convesao-resultado")
+        }else{
+ 
+        
+        resultado.innerHTML = `
+         <div class="resultado-box" >
+                <span>Resultado:</span>
+                <div class="info-resultado">
+                    <div class="esquerda">
+                    <span>Décimal (base 10):</span>
+                    <span>Binário (Base 2):</span>
+                    <span>Octal (Base 8):</span>
+                    <span>Hexadecimal (Base 16):</span>
+                    </div>
+                    <div class="direita">
+                        <span>${decimal}</span>
+                        <span>${binario}</span>
+                        <span>${octal}</span>
+                        <span>${hex}</span>
+                    </div>
+                </div>
+            </div>`
+        div_conversao.classList.add("convesao-resultado")
+        }
+    }
+    function mudarTema(tema){
+        let root = document.documentElement;
+        if(tema =='escuro'){
+            root.style.setProperty('--fundo','#212121')
+            root.style.setProperty('--letras','#FFFFFFDE')
+            root.style.setProperty('--shadow','#00000099')
+            root.style.setProperty('--roxo','#9D4DFF')
+
+        }else{
+            root.style.setProperty('--fundo','#fff')
+            root.style.setProperty('--letras','#000000bd')
+            root.style.setProperty('--shadow','#00000040')
+            root.style.setProperty('--roxo','#7500CE')
+        }
+    }
+    
+</script>
+
+</html>
