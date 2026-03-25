@@ -14,8 +14,8 @@
 <body>
     <div class="navbar">
         <div class="links">
-            <span>Conversão</span>
-            <span>Calculadora</span>
+            <span onclick="irConversor()">Conversão</span>
+            <span onclick="irCalculadora()">Calculadora</span>
         </div>
         <div class="tema">
             <button class="buttonTema" onclick="mudarTema('escuro')">
@@ -26,7 +26,7 @@
             </button>
         </div>
     </div>
-    <div class="container conversao">
+    <div class="container conversao" id="conversao">
         <p class="titulo">Conversão de bases</p>
         <div class="box-conversao " id="div_conversao">
             <div class="input-box">
@@ -34,7 +34,7 @@
                 <input type="text" id="numeroConversao" placeholder="Insira o Número">
             </div>
             <div class="input-box">
-                <label for="numeroConversao">Base:</label>
+                <label for="base_select">Base:</label>
                 <Select id="base_select">
                     <option value="10">Decimal (Base 10)</option>
                     <option value="2">Binário (Base 2)</option>
@@ -43,7 +43,51 @@
                 </Select>
             </div>
             <button onclick="Converter()">Converter</button>
-            <div id="resultado">
+            <div class="resultado" id="resultado">
+
+            </div>
+        </div>
+    </div>
+    <div class=" container calculadora " id="calculadora">
+        <p class="titulo">Calculo entre bases</p>
+        <div class="box-conversao " id="div_calculo">
+            <div class="input-box">
+                <label for="numero1">Primeiro número:</label>
+                <input type="text" id="numero1" placeholder="Insira o Número">
+            </div>
+            <div class="input-box">
+                <label for="base_select1">Base:</label>
+                <Select id="base_select1">
+                    <option value="10">Decimal (Base 10)</option>
+                    <option value="2">Binário (Base 2)</option>
+                    <option value="8">Octal (Base 8)</option>
+                    <option value="16">Hexadecimal (Base 16)</option>
+                </Select>
+            </div>
+             <div class="input-box">
+                <label for="numero2">Segundo número:</label>
+                <input type="text" id="numero2" placeholder="Insira o Número">
+            </div>
+            <div class="input-box">
+                <label for="base_select2">Base:</label>
+                <Select id="base_select2">
+                    <option value="10">Decimal (Base 10)</option>
+                    <option value="2">Binário (Base 2)</option>
+                    <option value="8">Octal (Base 8)</option>
+                    <option value="16">Hexadecimal (Base 16)</option>
+                </Select>
+            </div>
+            <div class="input-box">
+                <label for="operacao_select">Operação:</label>
+                <Select id="operacao_select">
+                    <option>Somar</option>
+                    <option>Subtrair</option>
+                    <option>Dividir</option>
+                    <option>Multiplicar</option>
+                </Select>
+            </div>
+            <button onclick="calcular()">Converter</button>
+            <div  class="resultado" id="resultado_calculo">
 
             </div>
         </div>
@@ -58,13 +102,14 @@
         let binario = decimal.toString(2)
         let octal = decimal.toString(8)
         let hex = decimal.toString(16)
-        if(Number.isNaN(decimal) || Number.isNaN(binario)|| Number.isNaN(octal)|| Number.isNaN(hex)){
+        if(isNaN(decimal)  || isNaN(binario)|| isNaN(octal)){
             alert("Numero inválido para essa base")
             resultado.innerHTML = ''
              div_conversao.classList.remove("convesao-resultado")
         }else{
- 
-        
+ 643
+        248 + 1603
+
         resultado.innerHTML = `
          <div class="resultado-box" >
                 <span>Resultado:</span>
@@ -101,7 +146,58 @@
             root.style.setProperty('--roxo','#7500CE')
         }
     }
-    
+    function irCalculadora(){
+        conversao.classList.remove('Entrada')
+        conversao.classList.add('Saida')
+        calculadora.classList.remove('Saida')
+        calculadora.classList.add('Entrada')
+
+    }
+    function irConversor(){
+        conversao.classList.remove('Saida')
+        calculadora.classList.add('Saida')
+        calculadora.classList.remove('Entrada')
+    }
+    function calcular(){
+        let n1Decimal = parseInt(numero1.value,base_select1.value)
+        let n2Decimal = parseInt(numero2.value,base_select2.value)
+        let resultado = 0
+        let operacao = operacao_select.value
+        if(operacao =="Somar"){
+            resultado = n1Decimal + n2Decimal
+        }else if(operacao =="Subtrair"){
+            resultado = n1Decimal - n2Decimal
+
+        }else if(operacao =="Dividir"){
+            resultado = n1Decimal / n2Decimal
+            
+        }else if(operacao =="Multiplicar"){
+            resultado = n1Decimal * n2Decimal
+        }
+        let binario = resultado.toString(2)
+        let octal = resultado.toString(8)
+        let hex = resultado.toString(16)
+        resultado_calculo
+        resultado_calculo.innerHTML = `
+         <div class="resultado-box" >
+                <span>Resultado:</span>
+                <div class="info-resultado">
+                    <div class="esquerda">
+                    <span>Décimal (base 10):</span>
+                    <span>Binário (Base 2):</span>
+                    <span>Octal (Base 8):</span>
+                    <span>Hexadecimal (Base 16):</span>
+                    </div>
+                    <div class="direita">
+                    <span>${resultado}</span>
+                    <span>${binario}</span>
+                    <span>${octal}</span>
+                    <span>${hex}</span>
+                    </div>
+                </div>
+            </div>`
+        div_calculo.classList.add("calculo-resultado")
+    }
 </script>
 
 </html>
